@@ -35,6 +35,28 @@ const getUsersDB = async () => {
         }
     };
 
+
+const getSalaDB = async () => {
+    const client = await pool.connect();
+            try {
+                const respuesta = await client.query(
+                    "SELECT nombre_sala, ubicacion_map FROM salas WHERE id_ubicacion=$1"
+                );
+                return {
+                    ok: true,
+                    users: respuesta.rows,
+                };
+            } catch (error) {
+                console.log(error);
+                return {
+                    ok: false,
+                    msg: error.message,
+                };
+            } finally {
+                client.release();
+            }
+        };
+
 module.exports = {
     getUsersDB,
     
