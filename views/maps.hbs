@@ -1,0 +1,36 @@
+<h1>Mapa test</h1>
+
+<style>
+      @import url(../templates/bucket.css);
+    </style>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="loadingOverlay"><h1>Loading...</h1></div>
+    <div id="toolbar"></div>
+    
+<script>
+const viewer = new Cesium.Viewer("cesiumContainer", {
+  timeline: false,
+  animation: false,
+});
+
+const pinBuilder = new Cesium.PinBuilder();
+
+const bluePin = viewer.entities.add({
+  name: "Blank blue pin",
+  position: Cesium.Cartesian3.fromDegrees(-70.713104, -33.574477),
+  billboard: {
+    image: pinBuilder.fromColor(Cesium.Color.ROYALBLUE, 48).toDataURL(),
+    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+  },
+});
+
+//Since some of the pins are created asynchronously, wait for them all to load before zooming/
+Promise.all([bluePin, groceryPin]).then(
+  function (pins) {
+    viewer.zoomTo(pins);
+  }
+);
+
+
+
+</script>
