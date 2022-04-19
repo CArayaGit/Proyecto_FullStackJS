@@ -7,6 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public/img'));
 
 //hbs:
 const hbs = create({
@@ -19,7 +20,7 @@ app.set("view engine", ".hbs");
 app.set("views", "./views");
 
 //app.use("/api/v1/", require("./routes/users.route"));
-//app.use("/", require("./routes/vistas.route"));
+app.use("/", require("./routes/vistas.route"));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, console.log(`Servidor OK, en puerto: ${PORT}`) );
