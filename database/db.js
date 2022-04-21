@@ -35,11 +35,113 @@ const getUsersDB = async () => {
         }
     };
 
+const createUserDB = async ({ nombre, email, hashPassword }) => {
+    const client = await pool.connect();
+    const query = {
+        text: "INSERT INTO usuarios (nombre, email, password) VALUES ($1,$2,$3) RETURNING *",
+        values: [nombre, email, hashPassword],
+    };
+    
+    try {
+        const respuesta = await client.query(query);
+        console.log(respuesta);
+        const { id } = respuesta.rows[0];
+        return {
+            ok: true,
+            users: respuesta.rows,
+        };
+    } catch (error) {
+        console.log(error);
+        if (error.code === "23505") {
+            return {
+                ok: false,
+                msg: "Ya existe el email registrado",
+            };
+        } return {
+            ok: false,
+            msg: error.message,
+            };
+    } finally {
+        client.release();
+    }
+};
 
+const getUserDB = async ({email}) => {
+    const client = await pool.connect();
+    const query = {
+        text: "SELECT * FROM usuarios WHERE email = $1",
+        values: [email],
+    };
+    try {
+        const respuesta = await client.query(query);
+        return {
+            ok: true,
+            user: respuesta.rows[0],
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            ok: false,
+            msg: error.message,
+        };
+    } finally {
+        client.release();
+    }
+};
+
+const updateUserDB = async ({ nombre, email, hashPassword }) => {
+    const client = await pool.connect();
+    const query = {
+        text: "UPDATE usuarios SET nombre=$1, email=$2, password=$3 WHERE email=$2",
+        values: [nombre, email, hashPassword],
+    };
+
+    try {
+        const respuesta = await client.query(query);
+        console.log(respuesta.rows);
+        return {
+            ok: true,
+            users: respuesta.rows,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            ok: false,
+            msg: error.message,
+        };
+    } finally {
+        client.release();
+    }
+};
+
+const deleteUserDB = async ({id_user}) => {
+    const client = await pool.connect();
+    const query = {
+        text: "DELETE FROM usuarios WHERE id = $1;",
+        values: [id_user],
+    };
+    try {
+        const respuesta = await client.query(query);
+        return {
+            ok: true,
+            user: respuesta.rows[0],
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            ok: false,
+            msg: error.message,
+        };
+    } finally {
+        client.release();
+    }
+};
+
+/*
 const getSalaDB = async (id_sala) => {
     const client = await pool.connect();
-    const respuesta = await client.query(
-        "SELECT nombre_sala, ubicacion_map FROM salas WHERE id_ubicacion=$1",
+    const query = (
+        text: "SELECT nombre_sala, ubicacion_map FROM salas WHERE id_ubicacion=$1;",
         values: [id_sala],
     );
     
@@ -59,9 +161,13 @@ const getSalaDB = async (id_sala) => {
                 client.release();
         }
     };
-
+*/
 
 module.exports = {
     getUsersDB,
-    getSalaDB
+    createUserDB,
+    getUserDB,
+    updateUserDB,
+    deleteUserDB,
+    
 };
