@@ -3,15 +3,18 @@ const requireDatos = (req, res, next) => {
         // validaciones
         const { nombre, email, password } = req.body;
 
+        console.log(req.body)
+
         if (
-            !nombre?.trim() ||
-            !email?.trim() ||
-            !password?.trim()
+            !nombre ||
+            !email ||
+            !password
         ) {
             throw new Error("Algunos campos están vacios");
         }
 
         next();
+
     } catch (error) {
         return res.status(400).json({
             ok: false,

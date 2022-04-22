@@ -1,13 +1,13 @@
 <div class="container">
   <h1 class="text-center">Bienvenido, ingresa con tu email y contraseña</h1>
-  <form>
+  <form  id="login">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <input type="email" class="form-control" name="email">
     </div>
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1">
+      <input type="password" class="form-control" name="password">
     </div>
     <button type="submit" class="btn btn-dark">Ingresar</button>
   </form>
@@ -15,3 +15,37 @@
 </div>
 
 
+<script>
+const formulario = document.getElementById('login');
+
+formulario.addEventListener('submit', async(e) => {
+    e.preventDefault()
+
+    //formdata utiliza los "name" de los input
+    const formData = new FormData(formulario)
+
+    try {
+        const res = await fetch('/api/v1/login', {
+            method: 'post',
+            body: formData
+        })
+
+        const data = await res.json()
+        console.log(data);
+        if(!data.ok){
+            return alert(data.msg)
+        }
+
+        //para guardar token en localstorage:
+        localStorage.setItem('token', data.token)
+        //enviar usuario a ruta raiz protegida
+        const [email] = [...formData.values()];
+
+        window.location.href = '/salas'
+
+    }catch(error){
+        console.log(error)
+    }
+});
+
+</script>

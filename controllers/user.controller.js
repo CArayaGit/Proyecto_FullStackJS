@@ -14,14 +14,13 @@ const getUsers = async (req, res) => {
 const createUser = async (req, res) => {
     try{
         const { nombre, email, password } = req.body
-       
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
 
         const respuesta = await createUserDB({
             nombre,
             email,
-            hashPassword,
+            hashPassword
         });
         console.log(respuesta);
 
@@ -60,6 +59,7 @@ const loginUser = async (req, res) => {
 
         const { user } = respuesta;
         const comparePassword = await bcrypt.compare(password, user.password);
+        //const comparePassword = await password == user.password;
         if (!comparePassword) {
             throw new Error("Contraseña incorrecta");
         }
@@ -117,8 +117,8 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {      
     try{
-        const { id_user } = req.body
-        const respuesta = await deleteUserDB({ id_user });
+        const { email } = req.body
+        const respuesta = await deleteUserDB({ email });
         console.log(respuesta);
 
         if(!respuesta.ok) {

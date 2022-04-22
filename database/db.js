@@ -38,7 +38,7 @@ const getUsersDB = async () => {
 const createUserDB = async ({ nombre, email, hashPassword }) => {
     const client = await pool.connect();
     const query = {
-        text: "INSERT INTO usuarios (nombre, email, password) VALUES ($1,$2,$3) RETURNING *",
+        text: "INSERT INTO usuarios (nombre_user, email, password) VALUES ($1,$2,$3) RETURNING *",
         values: [nombre, email, hashPassword],
     };
     
@@ -92,7 +92,7 @@ const getUserDB = async ({email}) => {
 const updateUserDB = async ({ nombre, email, hashPassword }) => {
     const client = await pool.connect();
     const query = {
-        text: "UPDATE usuarios SET nombre=$1, email=$2, password=$3 WHERE email=$2",
+        text: "UPDATE usuarios SET nombre_user=$1, email=$2, password=$3 WHERE email=$2",
         values: [nombre, email, hashPassword],
     };
 
@@ -114,11 +114,11 @@ const updateUserDB = async ({ nombre, email, hashPassword }) => {
     }
 };
 
-const deleteUserDB = async ({id_user}) => {
+const deleteUserDB = async ({ email }) => {
     const client = await pool.connect();
     const query = {
-        text: "DELETE FROM usuarios WHERE id = $1;",
-        values: [id_user],
+        text: "DELETE FROM usuarios WHERE email=$1;",
+        values: [email],
     };
     try {
         const respuesta = await client.query(query);
