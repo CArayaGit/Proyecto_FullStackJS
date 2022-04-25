@@ -18,7 +18,7 @@ const getUsersDB = async () => {
     const client = await pool.connect();
         try {
             const respuesta = await client.query(
-                "SELECT * FROM usuarios"
+                "SELECT id_user, nombre_user, email, admin FROM usuarios ORDER BY id_user ASC"
             );
             return {
                 ok: true,
@@ -114,11 +114,11 @@ const updateUserDB = async ({ nombre, email, hashPassword }) => {
     }
 };
 
-const deleteUserDB = async ({ email }) => {
+const deleteUserDB = async ({ id_user }) => {
     const client = await pool.connect();
     const query = {
-        text: "DELETE FROM usuarios WHERE email=$1;",
-        values: [email],
+        text: "DELETE FROM usuarios WHERE id_user=$1;",
+        values: [id_user],
     };
     try {
         const respuesta = await client.query(query);
@@ -137,31 +137,47 @@ const deleteUserDB = async ({ email }) => {
     }
 };
 
-/*
-const getSalaDB = async (id_sala) => {
+const getSalasDB = async () => {
     const client = await pool.connect();
-    const query = (
-        text: "SELECT nombre_sala, ubicacion_map FROM salas WHERE id_ubicacion=$1;",
-        values: [id_sala],
-    );
-    
-    try {
-        const respuesta = await client.query(query);
-        return {
-            ok: true,
-            user: respuesta.rows[0],
-        };
+        try {
+            const respuesta = await client.query(
+                "SELECT * FROM salas"
+            );
+            return {
+                ok: true,
+                users: respuesta.rows,
+            };
         } catch (error) {
             console.log(error);
             return {
-                    ok: false,
-                    msg: error.message,
+                ok: false,
+                msg: error.message,
             };
         } finally {
-                client.release();
+            client.release();
         }
     };
-*/
+
+const getEquiposDB = async () => {
+    const client = await pool.connect();
+        try {
+            const respuesta = await client.query(
+                "SELECT * FROM equipos"
+            );
+            return {
+                ok: true,
+                users: respuesta.rows,
+            };
+        } catch (error) {
+            console.log(error);
+            return {
+                ok: false,
+                msg: error.message,
+            };
+        } finally {
+            client.release();
+        }
+    };
 
 module.exports = {
     getUsersDB,
@@ -169,5 +185,6 @@ module.exports = {
     getUserDB,
     updateUserDB,
     deleteUserDB,
-    
+    getSalasDB,
+    getEquiposDB
 };

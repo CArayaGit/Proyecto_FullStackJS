@@ -1,4 +1,4 @@
-const limpiar = (req, res, next) => {
+const kTrim = (req, res, next) => {
 
     const keys = Object.keys(req.body)
 
@@ -11,4 +11,4 @@ const limpiar = (req, res, next) => {
     next()
 };
 
-module.exports = { limpiar };
+module.exports = { kTrim };

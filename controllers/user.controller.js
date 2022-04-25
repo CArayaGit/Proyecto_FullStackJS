@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { getUsersDB, createUserDB, getUserDB, updateUserDB, deleteUserDB } = require("../database/db");
+const { getUsersDB, createUserDB, getUserDB, updateUserDB, deleteUserDB, getSalasDB } = require("../database/db");
 
 
 const getUsers = async (req, res) => {
@@ -117,8 +117,8 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {      
     try{
-        const { email } = req.body
-        const respuesta = await deleteUserDB({ email });
+        const { id_user } = req.body
+        const respuesta = await deleteUserDB({ id_user });
         console.log(respuesta);
 
         if(!respuesta.ok) {
@@ -140,10 +140,28 @@ const deleteUser = async (req, res) => {
     }
 };
 
+const getSalas = async (req, res) => {
+    const respuesta = await getSalasDB();
+    if(!respuesta.ok) {
+        return res.status(500).json({ OK: false, msg: respuesta.msg });
+    }
+    return res.json({ ok: true, users: respuesta.users});
+};
+
+const getEquipos = async (req, res) => {
+    const respuesta = await getEquiposDB();
+    if(!respuesta.ok) {
+        return res.status(500).json({ OK: false, msg: respuesta.msg });
+    }
+    return res.json({ ok: true, users: respuesta.users});
+};
+
 module.exports = {
     getUsers,
     createUser,
     loginUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getSalas,
+    getEquipos
 };

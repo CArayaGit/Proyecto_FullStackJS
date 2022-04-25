@@ -1,33 +1,52 @@
 <html>
+
 <head>
-<style>
-body {
-  background-image: url('/img/fondo_02.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-</style>
+  <style>
+    body {
+      background-image: url('/img/fondo_02.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="container m-3">
-  <h1 class="tex-center">SALAS DE BOMBAS</h1>
-  
+  <div class="container m-3">
+    <h1 class="tex-center">SALAS DE BOMBAS</h1>
+
+
+    <div class="container">
+      <div class="col-4 m-3">
+        <div class="card rounded-3" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title text-dark">PE - La Vara:</h5>
+            <img src="" class="card-img-top" alt="mapa">
+          </div>
+          <a href="selecSala" class="btn btn-secondary text-white">Ingresar</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+
+</html>
+
+<script>
 
   <div class="container">
     <div class="col-4 m-3">
       <div class="card rounded-3" style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title text-dark">PE - La Vara:</h5>
-          <img src="" class="card-img-top" alt="mapa">
+          <h5 class="card-title text-dark">PE - {{ item.nombre_sala }}:</h5>
+          <img src="{{item.ubicacion_map}}" class="card-img-top" alt="mapa">
         </div>
-        <a href="laVara" class="btn btn-secondary text-white">Ingresar</a>
+        <a href="{{item.nombre_sala}}" class="btn btn-secondary text-white">Ingresar</a>
       </div>
     </div>
 
   </div>
-</div>
 
-</body>
-</html>
-
+</script>

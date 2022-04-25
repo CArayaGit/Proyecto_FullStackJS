@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <style>
+        body {
+            background-image: url('/img/fondo_02.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container m-3">
+        <h1 class="tex-center">SALA SELECCIONADA</h1>
+
+        <div class="row">
+            <div class="col-5 mb-2 me-4 bg-secondary text-white border border-dark rounded">MAPA:<br>
+                <tbody id="mapa">
+
+                </tbody>
+            </div>
+            <div class="col-5 mb-2 ms-4 bg-secondary text-white ms-auto border border-dark rounded">ESTADO SALA:<br>
+                <tbody id="ultimoDato">
+
+                </tbody>
+            </div>
+            <div class="col-12 mb-2 bg-secondary text-white border border-dark rounded">ÚLTIMOS DATOS:<br>
+                <table class="table table-dark table-striped md-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">Fecha/Hora</th>
+                            <th scope="col">Equipo</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="datos">
+                        <div>
+                            <span class="visually-hidden">Loading...</span>
+
+                        </div>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>

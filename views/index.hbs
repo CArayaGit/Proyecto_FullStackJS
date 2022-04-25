@@ -1,6 +1,6 @@
 <div class="container">
   <h1 class="text-center">Bienvenido, ingresa con tu email y contraseña</h1>
-  <form  id="login">
+  <form id="login">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email</label>
       <input type="email" class="form-control" name="email">
@@ -16,36 +16,36 @@
 
 
 <script>
-const formulario = document.getElementById('login');
+  const formulario = document.getElementById('login');
 
-formulario.addEventListener('submit', async(e) => {
+  formulario.addEventListener('submit', async (e) => {
     e.preventDefault()
 
     //formdata utiliza los "name" de los input
     const formData = new FormData(formulario)
 
     try {
-        const res = await fetch('/api/v1/login', {
-            method: 'post',
-            body: formData
-        })
+      const res = await fetch('/api/v1/login', {
+        method: 'post',
+        body: formData
+      })
 
-        const data = await res.json()
-        console.log(data);
-        if(!data.ok){
-            return alert(data.msg)
-        }
+      const data = await res.json()
+      console.log(data);
+      if (!data.ok) {
+        return alert(data.msg)
+      }
 
-        //para guardar token en localstorage:
-        localStorage.setItem('token', data.token)
-        //enviar usuario a ruta raiz protegida
-        const [email] = [...formData.values()];
+      //para guardar token en localstorage:
+      localStorage.setItem('token', data.token)
+      //enviar usuario a ruta raiz protegida
+      const [email] = [...formData.values()];
 
-        window.location.href = '/salas'
+      window.location.href = '/salas'
 
-    }catch(error){
-        console.log(error)
+    } catch (error) {
+      console.log(error)
     }
-});
+  });
 
 </script>

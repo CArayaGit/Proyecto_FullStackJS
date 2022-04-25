@@ -1,0 +1,159 @@
+<div class="mt-3">
+    <h2 class="text-center">Crear un nuevo usuario:</h2>
+
+    <form id="formRegister">
+        <div class="form-group row w-50 m-auto">
+            <div class="form-group col-12 col-sm-6">
+                <label>Nombre</label>
+                <input type="text" class="form-control m-auto" name="nombre" />
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Email</label>
+                <input type="email" class="form-control m-auto" name="email" />
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Password</label>
+                <input type="password" class="form-control m-auto" name="password" />
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Repita la password</label>
+                <input type="password" class="form-control m-auto" name="passwordValid" />
+            </div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-dark mt-3" type="submit">Registrar</button>
+        </div>
+    </form>
+</div>
+
+<hr class="text-center" />
+
+<div class="py-2">
+    <h2 class="text-center">Lista de usuarios:</h2>
+
+    <table class="table table-dark table-striped md-3">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Email</th>
+                <th scope="col">Tipo de Usuario</th>
+                <th scope="col">Editar / Eliminar</th>
+            </tr>
+        </thead>
+        <tbody id="app">
+            <div>
+                <span class="visually-hidden">Loading...</span>
+
+            </div>
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+const formulario = document.getElementById('formRegister')
+
+    formulario.addEventListener('submit', async (e) => {
+        e.preventDefault()
+
+        const formData = new FormData(formulario)
+
+        //para validar datos en front para usuario(campos vacios y formato)
+        //const [email, nombre, password, passwordValid, experiencia, especialidad] = [...datos.
+        try {
+            const res = await fetch('/api/v1/users', {
+                method: 'post',
+                body: formData
+            })
+            const data = await res.json()
+            console.log(data);
+            if (!data.ok) {
+                return alert(data.msg)
+            }
+            //para guardar token en localstorage:
+            localStorage.setItem('token', data.token)
+            //enviar usuario a ruta raiz protegida
+            window.location.href = "/editUser"
+
+        } catch (error) {
+            console.log(error)
+        }
+    });
+
+const app = document.getElementById('app')
+    
+    const pintarDatos = (data) => {
+        
+        data.forEach(item => {
+          const estado = item.estado;
+          const user = '';
+          const tipoUsuario = () => {
+              if (item.admin = true){
+                  user = 'Administrador'
+              } else {
+                  user = 'operador'
+              }
+          }
+            app.innerHTML += `
+            <tr>
+              <th scope="row">${item.id_user}</th>
+              <td>${item.nombre_user}</td>
+              <td>${item.email}</td>
+              <td>${item.admin}</td>
+              <td><button class="btn btn-secondary me-1" id="editar">Editar</button><button class="btn btn-secondary mx-1" id="eliminar" value="${item.id_user}">Eliminar</button></td>
+            </tr>
+            `
+
+        })
+
+const eliminarUser = document.getElementById('eliminar');
+eliminarUser.addEventListener("click", (e) => {
+            fetch(`api/v1/editar/${item.id_user}`, {
+                method: 'delete', 
+                body: `"id_user":"[boton].value"`,
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            })
+            window.location.href = "/editUser" 
+        })
+
+/*
+
+        const eliminarUser = () => {
+            try {
+            const res = await fetch('/api/v1/editar/:id_user', {
+                method: 'delete',
+                body: "id_user",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            })
+            const data = await res.json()
+            console.log(data);
+            if (!data.ok) {
+                return alert(data.msg)
+            }
+
+            } catch (error) {
+                console.log(error)
+            } 
+            window.location.href = "/editUser"
+        }
+  */      
+    }
+    
+    window.document.addEventListener("DOMContentLoaded", async () => {
+        const res = await fetch("/api/v1/users", {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        const data = await res.json();
+        console.log(data);
+       
+        pintarDatos(data.users);
+    });
+
+</script>

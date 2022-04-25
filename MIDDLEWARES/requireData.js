@@ -1,4 +1,4 @@
-const requireDatos = (req, res, next) => {
+const requireData = (req, res, next) => {
     try {
         // validaciones
         const { nombre, email, password } = req.body;
@@ -23,4 +23,4 @@ const requireDatos = (req, res, next) => {
     }
 };
 
-module.exports = { requireDatos };
+module.exports = { requireData };

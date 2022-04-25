@@ -1,16 +1,16 @@
 require("dotenv").config();
 const express = require("express");
-const fileUpload = require("express-fileupload")
+const fileUpload = require("express-fileupload");
 const {create} = require("express-handlebars");
-const { limpiar } = require("./MIDDLEWARES/limpiar");
+const { kTrim } = require("./middlewares/trimValues");
 const app = express();
 
 //req.body:
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(fileUpload())
+app.use(fileUpload());
 app.use(express.static('public'));
-app.use(limpiar)
+app.use(kTrim);
 
 //hbs:
 const hbs = create({
