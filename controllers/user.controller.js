@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { getUsersDB, createUserDB, getUserDB, updateUserDB, deleteUserDB, getSalasDB } = require("../database/db");
+const { getUsersDB, createUserDB, getUserDB, updateUserDB, deleteUserDB, getSalasDB, getEquiposDB } = require("../database/db");
 
 
 const getUsers = async (req, res) => {

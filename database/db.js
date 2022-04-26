@@ -162,7 +162,7 @@ const getEquiposDB = async () => {
     const client = await pool.connect();
         try {
             const respuesta = await client.query(
-                "SELECT * FROM equipos"
+                "SELECT * FROM equipos ORDER BY timestamp DESC"
             );
             return {
                 ok: true,

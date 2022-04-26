@@ -25,7 +25,7 @@ CREATE TABLE equipos (
 	nombre_equipo VARCHAR(30) NOT NULL, 
 	dato INT,
 	estado BOOLEAN,
-	tiemstamp DATE
+	timestamp DATE
 );
 
 --poblar tablas:
@@ -38,6 +38,15 @@ VALUES ('La Vara', 'lit1','psbb1','gen1', 'https://goo.gl/maps/enYdnTPspVU73jAz9
 ('Lo Blanco', 'lit2','psbb2','gen2', 'https://goo.gl/maps/KTaBpPiQrQNvDrYD8');	
 				
 INSERT INTO equipos(id_ubicacion, nombre_equipo, dato, estado, tiemstamp)					
-VALUES (1, 'nivel_s1', 10, true, '2021-12-30 18:23:00-03'),
-(1, 'bomba_s1', 0, false, '2021-12-30 18:23:00-03'),	
-(1, 'generador_s1', 3, true, '2021-12-30 18:23:00-03');
+VALUES (1, 'nivel_s1', 10, true, '2022-01-4 18:30:00-03'),
+(1, 'bomba_s1', 0, false, '2022-01-4 18:30:00-03'),	
+(1, 'generador_s1', 3, true, '2022-01-4 18:30:00-03'),
+(1, 'nivel_s1', 10, true, '2022-01-4 18:40:00-03'),
+(1, 'bomba_s1', 0, false, '2022-01-4 18:40:00-03'),	
+(1, 'generador_s1', 3, true, '2022-01-4 18:40:00-03'),
+(1, 'nivel_s1', 10, true, '2022-01-4 18:50:00-03'),
+(1, 'bomba_s1', 0, false, '2022-01-4 18:50:00-03'),	
+(1, 'generador_s1', 3, true, '2022-01-4 18:50:00-03'),
+(1, 'nivel_s1', 10, true, '2022-01-4 19:00:00-03'),
+(1, 'bomba_s1', 0, false, '2022-01-4 19:00:00-03'),	
+(1, 'generador_s1', 3, true, '2022-01-4 19:00:00-03');

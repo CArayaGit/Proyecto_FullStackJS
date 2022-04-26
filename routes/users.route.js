@@ -12,6 +12,6 @@ router.put("/editar/:email", requireAuth, updateUser);
 router.delete("/editar/:id_user", requireAuth, deleteUser);
 
 router.get("/salas", getSalas);
-router.get("/equipos", getEquipos);
+router.get("/equipos", requireAuth, getEquipos);
 
 module.exports = router;
