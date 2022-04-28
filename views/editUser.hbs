@@ -101,48 +101,45 @@ const app = document.getElementById('app')
               <td>${item.nombre_user}</td>
               <td>${item.email}</td>
               <td>${item.admin}</td>
-              <td><button class="btn btn-secondary me-1" id="editar">Editar</button><button class="btn btn-secondary mx-1" id="eliminar" value="${item.id_user}">Eliminar</button></td>
+              <td><button class="btn btn-secondary me-1 editar">Editar</button><button class="btn btn-secondary mx-1 eliminar" data-user="${item.id_user}">Eliminar</button></td>
             </tr>
             `
+        app.addEventListener('click', confirmarEliminar);
 
         })
 
-const eliminarUser = document.getElementById('eliminar');
-eliminarUser.addEventListener("click", (e) => {
-            fetch(`api/v1/editar/${item.id_user}`, {
-                method: 'delete', 
-                body: `"id_user":"[boton].value"`,
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            })
-            window.location.href = "/editUser" 
-        })
+    function confirmarEliminar(e){
+        if(e.target.classList.contains('eliminar')){
+            //console.log('eliminar');
+            const userId = parseInt( e.target.dataset.user );
+            //console.log(userId);
 
-/*
-
-        const eliminarUser = () => {
-            try {
-            const res = await fetch('/api/v1/editar/:id_user', {
-                method: 'delete',
-                body: "id_user",
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            })
-            const data = await res.json()
-            console.log(data);
-            if (!data.ok) {
-                return alert(data.msg)
+            const confirmar = confirm('¿Desea eliminar este usuario?');
+            if(confirmar){
+                eliminarUsuario(userId);
             }
 
-            } catch (error) {
-                console.log(error)
-            } 
-            window.location.href = "/editUser"
         }
-  */      
+        
     }
+
+    const eliminarUsuario = async id => {
+            try {
+                await fetch(`api/v1/editar/${id}`, {
+                    method: 'DELETE',
+                    body: formData,
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                });
+            } catch (error) {
+                console.log(error);
+            }
+            window.location.href = "/editUser"
+        };
+
+      
+}
     
     window.document.addEventListener("DOMContentLoaded", async () => {
         const res = await fetch("/api/v1/users", {

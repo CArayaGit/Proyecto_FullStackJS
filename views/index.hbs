@@ -35,12 +35,12 @@
       if (!data.ok) {
         return alert(data.msg)
       }
-
+      
       //para guardar token en localstorage:
       localStorage.setItem('token', data.token)
       //enviar usuario a ruta raiz protegida
       const [email] = [...formData.values()];
-
+      console.log(email);
       window.location.href = '/salas'
 
     } catch (error) {

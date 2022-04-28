@@ -158,6 +158,29 @@ const getSalasDB = async () => {
         }
     };
 
+const getSalaDB = async ({id_ubicacion}) => {
+    const client = await pool.connect();
+    const query = {
+        text: "SELECT * FROM usuarios WHERE id_ubicacion=$1",
+        values: [id_ubicacion],
+    };
+    try {
+        const respuesta = await client.query(query);
+        return {
+            ok: true,
+            user: respuesta.rows[0],
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            ok: false,
+            msg: error.message,
+        };
+    } finally {
+        client.release();
+    }
+};
+
 const getEquiposDB = async () => {
     const client = await pool.connect();
         try {
@@ -179,6 +202,27 @@ const getEquiposDB = async () => {
         }
     };
 
+    const getNivelDB = async () => {
+        const client = await pool.connect();
+            try {
+                const respuesta = await client.query(
+                    "SELECT dato, timestamp FROM equipos WHERE nombre_equipo LIKE '%nivel%' ORDER BY timestamp DESC;"
+                );
+                return {
+                    ok: true,
+                    users: respuesta.rows,
+                };
+            } catch (error) {
+                console.log(error);
+                return {
+                    ok: false,
+                    msg: error.message,
+                };
+            } finally {
+                client.release();
+            }
+        };
+
 module.exports = {
     getUsersDB,
     createUserDB,
@@ -186,5 +230,7 @@ module.exports = {
     updateUserDB,
     deleteUserDB,
     getSalasDB,
-    getEquiposDB
+    getSalaDB,
+    getEquiposDB,
+    getNivelDB
 };
