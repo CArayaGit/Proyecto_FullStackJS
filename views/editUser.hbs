@@ -1,3 +1,5 @@
+{{> Navbar}}
+
 <div class="mt-3">
     <h2 class="text-center">Crear un nuevo usuario:</h2>
 
@@ -38,7 +40,7 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Email</th>
                 <th scope="col">Tipo de Usuario</th>
-                <th scope="col">Editar / Eliminar</th>
+                <th scope="col">Editar</th>
             </tr>
         </thead>
         <tbody id="app">
@@ -101,33 +103,38 @@ const app = document.getElementById('app')
               <td>${item.nombre_user}</td>
               <td>${item.email}</td>
               <td>${item.admin}</td>
-              <td><button class="btn btn-secondary me-1 editar">Editar</button><button class="btn btn-secondary mx-1 eliminar" data-user="${item.id_user}">Eliminar</button></td>
+              <td><button class="btn btn-secondary m-1 editar" data-user="${item.id_user}">Editar</button><button class="btn btn-secondary m-1 eliminar" data-user="${item.id_user}">Eliminar</button></td>
             </tr>
             `
-        app.addEventListener('click', confirmarEliminar);
+        app.addEventListener('click', confirmarEditar);
 
         })
 
-    function confirmarEliminar(e){
+    function confirmarEditar(e){
         if(e.target.classList.contains('eliminar')){
             //console.log('eliminar');
             const userId = parseInt( e.target.dataset.user );
             //console.log(userId);
-
             const confirmar = confirm('¿Desea eliminar este usuario?');
             if(confirmar){
                 eliminarUsuario(userId);
             }
-
         }
-        
+        if(e.target.classList.contains('editar')){
+            const userId = parseInt( e.target.dataset.user);
+            //console.log(userId);
+            const confirmar = confirm('¿Desea editar este usuario?');
+            if(confirmar){
+                editarUsuario(userId);
+            }
+        }  
     }
 
     const eliminarUsuario = async id => {
             try {
                 await fetch(`api/v1/editar/${id}`, {
                     method: 'DELETE',
-                    body: formData,
+                    //body: id,
                     headers: {
                         authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
@@ -137,11 +144,28 @@ const app = document.getElementById('app')
             }
             window.location.href = "/editUser"
         };
-
-      
+    
+    const editarUsuario = async id => {
+            try {
+                await fetch(`api/v1/editar/${id}`, {
+                    method: 'PUT',
+                    //body: id,
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                });
+            } catch (error) {
+                console.log(error);
+            }
+            window.location.href = "/editUser"
+        };
+   
 }
     
     window.document.addEventListener("DOMContentLoaded", async () => {
+        if(!localStorage.getItem("token")){
+            window.location.href = "/";
+        }
         const res = await fetch("/api/v1/users", {
             headers: {
                 authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -149,6 +173,9 @@ const app = document.getElementById('app')
         });
         const data = await res.json();
         console.log(data);
+        if(!data.ok){
+            window.location.href = "/";
+        }
        
         pintarDatos(data.users);
     });

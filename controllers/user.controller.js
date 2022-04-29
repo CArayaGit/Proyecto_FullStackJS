@@ -11,6 +11,33 @@ const getUsers = async (req, res) => {
     return res.json({ ok: true, users: respuesta.users});
 };
 
+const getUser = async (req, res) => {
+    try{
+        const { id } = req.body
+        const respuesta = await getUserDB({
+            id
+        });
+        console.log(respuesta);
+
+        if(!respuesta.ok) {
+            throw new Error(respuesta.msg);
+        }
+
+        const payload = {id: respuesta.id};
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
+
+        return res.json({
+            ok: true,
+            token,
+        });
+    } catch(error) {
+        return res.status(400).json({
+            ok: false,
+            msg: error.message
+        });
+    }
+};
+
 const createUser = async (req, res) => {
     try{
         const { nombre, email, password } = req.body
@@ -117,7 +144,7 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {      
     try{
-        const { id_user } = req.body
+        const { id_user } = req.params;
         const respuesta = await deleteUserDB({ id_user });
         console.log(respuesta);
 
@@ -166,6 +193,7 @@ const getNivel = async (req, res) => {
 
 module.exports = {
     getUsers,
+    getUser,
     createUser,
     loginUser,
     updateUser,
