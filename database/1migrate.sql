@@ -37,16 +37,16 @@ INSERT INTO salas(nombre_sala, id_lit, id_psbb, id_gen, ubicacion_map)
 VALUES ('La Vara', 'lit1','psbb1','gen1', 'https://goo.gl/maps/enYdnTPspVU73jAz9'),
 ('Lo Blanco', 'lit2','psbb2','gen2', 'https://goo.gl/maps/KTaBpPiQrQNvDrYD8');	
 				
-INSERT INTO equipos(id_ubicacion, nombre_equipo, dato, estado, timestamp)					
+INSERT INTO equipos(id_ubicacion, nombre_equipo, dato, estado, tiemstamp)					
 VALUES (1, 'nivel_s1', 10, true, '2022-01-4 18:30:00-03'),
 (1, 'bomba_s1', 0, false, '2022-01-4 18:30:00-03'),	
-(1, 'generador_s1', 4, true, '2022-01-4 18:30:00-03'),
-(1, 'nivel_s1', 23, true, '2022-01-4 18:40:00-03'),
+(1, 'generador_s1', 3, true, '2022-01-4 18:30:00-03'),
+(1, 'nivel_s1', 10, true, '2022-01-4 18:40:00-03'),
 (1, 'bomba_s1', 0, false, '2022-01-4 18:40:00-03'),	
-(1, 'generador_s1', 5, true, '2022-01-4 18:40:00-03'),
-(1, 'nivel_s1', 46, true, '2022-01-4 18:50:00-03'),
+(1, 'generador_s1', 3, true, '2022-01-4 18:40:00-03'),
+(1, 'nivel_s1', 10, true, '2022-01-4 18:50:00-03'),
 (1, 'bomba_s1', 0, false, '2022-01-4 18:50:00-03'),	
-(1, 'generador_s1', 6, true, '2022-01-4 18:50:00-03'),
-(1, 'nivel_s1', 58, true, '2022-01-4 19:00:00-03'),
+(1, 'generador_s1', 3, true, '2022-01-4 18:50:00-03'),
+(1, 'nivel_s1', 10, true, '2022-01-4 19:00:00-03'),
 (1, 'bomba_s1', 0, false, '2022-01-4 19:00:00-03'),	
-(1, 'generador_s1', 7, true, '2022-01-4 19:00:00-03');
+(1, 'generador_s1', 3, true, '2022-01-4 19:00:00-03');

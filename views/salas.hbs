@@ -12,37 +12,37 @@
 
 <body>
   {{> Navbar}}
-
+  
   <div class="container m-3">
     <h1 class="tex-center">SALAS DE BOMBAS</h1>
 
-    {{!-- <div class="container">
-      <div class="col-4 m-3">
-        <div class="card rounded-3" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title text-dark">PE - {{ item.nombre_sala }}:</h5>
-            <img src="{{item.ubicacion_map}}" class="card-img-top" alt="mapa">
-          </div>
-          <a href="/selecSala" class="btn btn-secondary text-white">Ingresar</a>
-        </div>
-      </div>
-    </div>  --}}
-
-    <body id="cardSalas">
+     <body id="cardSalas">
       <div>
         <span class="visually-hidden">Loading...</span>
 
       </div>
     </body>
 
+    {{!-- <div class="container">
+      <div class="col-4 m-3">
+        <div class="card rounded-3" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title text-dark">PE - La Vara:</h5>
+            <img src="" class="card-img-top" alt="mapa">
+          </div>
+          <a href="selecSala" class="btn btn-secondary text-white">Ingresar</a>
+        </div>
+      </div>
+
+    </div> --}}
+
   </div>
 
 </body>
-
 </html>
 
 <script>
-  const card = document.getElementById('cardSalas')
+const card = document.getElementById('cardSalas')
 
   const pintarDatos = (data) => {
 
@@ -82,6 +82,5 @@
 
     pintarDatos(data.users);
   });
-
 
 </script>
