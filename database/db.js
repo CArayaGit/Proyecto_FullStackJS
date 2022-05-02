@@ -76,7 +76,8 @@ const getUserDB = async ({email}) => {
         const respuesta = await client.query(query);
         return {
             ok: true,
-            users: respuesta.rows,
+            user: respuesta.rows[0],
+            users: respuesta.rows
         };
     } catch (error) {
         console.log(error);
