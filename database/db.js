@@ -66,17 +66,17 @@ const createUserDB = async ({ nombre, email, hashPassword }) => {
     }
 };
 
-const getUserDB = async ({id}) => {
+const getUserDB = async ({email}) => {
     const client = await pool.connect();
     const query = {
-        text: "SELECT * FROM usuarios WHERE id_user = $1",
-        values: [id],
+        text: "SELECT * FROM usuarios WHERE email=$1",
+        values: [email],
     };
     try {
         const respuesta = await client.query(query);
         return {
             ok: true,
-            user: respuesta.rows[0],
+            users: respuesta.rows,
         };
     } catch (error) {
         console.log(error);

@@ -43,6 +43,30 @@ const createUser = async (req, res) => {
     }
 };
 
+const getUser = async (req, res) => {      
+    try{
+        const { email } = req.params;
+        const respuesta = await getUserDB({ email });
+        console.log(respuesta);
+
+        if(!respuesta.ok) {
+            throw new Error(respuesta.msg);
+        }
+
+        //const payload = {id: respuesta.id};
+        //const token = jwt.sign(payload, process.env.JWT_SECRET);
+
+        return res.json({ ok: true, users: respuesta.users});
+
+        } catch(error) {
+            return res.status(404).json({
+                ok: false,
+                msg: error.message
+            });
+        }
+        
+};
+
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -168,6 +192,7 @@ module.exports = {
     getUsers,
     createUser,
     loginUser,
+    getUser,
     updateUser,
     deleteUser,
     getSalas,
