@@ -81,7 +81,7 @@
             },
         });
         const data = await res.json();
-        console.log(data);
+        //console.log(data);
         if (!data.ok) {
             window.location.href = "/";
         }
@@ -90,20 +90,46 @@
     });
 
 
-/*
-const grafico = document.getElementById('grafico')
-    const arrayGrafico = []
+    const grafico = document.getElementById('grafico')
     const pintarGrafico = (data) => {
-        data.forEach(item => {
-            for(let i=0; i < item.length; i++){
-                let xValues = `[]`
-                //push al arrayGrafico
+
+        data.forEach((item, index) => {
+            if(index < 10){
+                //logica
+                console.log(item)
+                //console.log(`${item.dato}`)
+            }else{
+                return
             }
-    
+
+            const estado = item.estado;
+
+            //console.log(item)
+            //console.log(`${item.dato}`)
+
+            
         })
-        
     }
-*/
+
+    window.document.addEventListener("DOMContentLoaded", async () => {
+        if (!localStorage.getItem("token")) {
+            window.location.href = "/";
+        }
+        const res = await fetch("/api/v1/nivel", {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        const data = await res.json();
+        console.log(data);
+        if (!data.ok) {
+            window.location.href = "/";
+        }
+
+        pintarGrafico(data.users);
+    });
+
+
 var xValues = [100,200,300,400,500,600,700,800,900,1000];
 new Chart("myChart", {
   type: "line",
