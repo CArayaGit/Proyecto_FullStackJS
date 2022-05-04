@@ -7,11 +7,11 @@
         <div class="form-group row w-50 m-auto">
             <div class="form-group col-12 col-sm-6">
                 <label>Nombre</label>
-                <input type="text" class="form-control m-auto" name="nombre" id="nombre"/>
+                <input type="text" class="form-control m-auto" name="nombre" id="nombre" />
             </div>
             <div class="form-group col-12 col-sm-6">
                 <label>Email</label>
-                <input type="email" class="form-control m-auto" name="email" id="email"/>
+                <input type="email" class="form-control m-auto disabled" name="email" id="email"/>
             </div>
             <div class="form-group col-12 col-sm-6">
                 <label>Password</label>
@@ -36,6 +36,36 @@
 
 <script>
 
+    const formulario = document.getElementById('editRegister');
+
+    formulario.addEventListener('submit', async (e) => {
+        e.preventDefault()
+
+        const formData = new FormData(formulario)
+        console.log(localStorage.getItem("token"));
+
+        try {
+            const res = await fetch(`/api/v1/editar/${email}`, {
+                method: 'PUT',
+                body: formData,
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            })
+            const data = await res.json()
+            console.log(data);
+            if (!data.ok) {
+                return alert(data.msg)
+            }
+
+            //window.location.href = "/editUser"
+
+        } catch (error) {
+            console.log(error)
+        }
+    });
+
+
     (function () {
         //campos formulario
         const nombreInput = document.querySelector('#nombre')
@@ -58,7 +88,7 @@
             const data = await res.json();
             console.log(data.users);
 
-            infoUser(data.users);
+            infoUser(data.users[0]);
         });
 
         function infoUser(user) {
@@ -69,33 +99,5 @@
         }
 
     })();
-
-    const formulario = document.getElementById('editRegister');
-    formulario.addEventListener('submit', async (e) => {
-        e.preventDefault()
-
-        const formData = new FormData(formulario)
-
-        try {
-            const res = await fetch(`/api/v1/users/${email}`, {
-                method: 'PUT',
-                body: formData,
-                headers: {
-                        authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
-            })
-            const data = await res.json()
-            console.log(data);
-            if (!data.ok) {
-                return alert(data.msg)
-            }
-            
-            //enviar usuario a ruta raiz protegida
-            window.location.href = "/editUser"
-
-        } catch (error) {
-            console.log(error)
-        }
-    });
 
 </script>

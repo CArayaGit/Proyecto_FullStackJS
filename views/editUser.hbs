@@ -59,8 +59,6 @@
 
         const formData = new FormData(formulario)
 
-        //para validar datos en front para usuario(campos vacios y formato)
-        //const [email, nombre, password, passwordValid, experiencia, especialidad] = [...datos.
         try {
             const res = await fetch('/api/v1/users', {
                 method: 'post',
@@ -114,13 +112,11 @@
                 //console.log('eliminar');
                 const userId = parseInt(e.target.dataset.user);
                 //console.log(userId);
-
                 const confirmar = confirm('¿Desea eliminar este usuario?');
                 if (confirmar) {
                     eliminarUsuario(userId);
                 }
             };
-
         }
 
         const eliminarUsuario = async id => {
