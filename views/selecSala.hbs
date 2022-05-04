@@ -23,7 +23,7 @@
                     <img src="" alt="">
                 </body>
             </div>
-            <div class="col-5 mb-2 ms-4 bg-light text-dark ms-auto border border-dark rounded">ESTADO SALA:<br>
+            <div class="col-5 mb-2 ms-4 bg-light text-dark ms-auto border border-dark rounded">NIVEL SALA:<br>
 
                 <body id="grafico">
                     <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
@@ -102,15 +102,15 @@
         let Ynivel = [];
 
         data.forEach((item, index) => {
-    
+
             if (index < 10) {
                 //console.log(item)
-                //console.log(parseInt(item.dato))
-                //console.log(item.timestamp)
-                
-                Xtime.push(item.timestamp)
+                let d = new Date(item.timestamp);
+                //console.log(d.toLocaleDateString())
+
+                Xtime.push(d.toLocaleDateString())
                 Ynivel.push(parseInt(item.dato))
-                
+
             } else {
                 return
             }
@@ -154,6 +154,4 @@
         pintarGrafico(data.users);
     });
 
-
-    
 </script>
