@@ -12,11 +12,11 @@
 
 <body>
   {{> Navbar}}
-  
-  <div class="container m-3">
-    <h1 class="tex-center">SALAS DE BOMBAS</h1>
 
-     <body id="cardSalas">
+  <div class="container m-3">
+    <h1 class="tex-center">Registro de eventos e incidentes:</h1>
+
+    <body id="registro">
       <div>
         <span class="visually-hidden">Loading...</span>
 
@@ -25,18 +25,48 @@
 
     <form id="eventRegister">
 
+      <label for="formFile" class="form-label">Seleccione una Sala:</label>
       <select class="form-select" aria-label="Default select example">
-        <option selected>Seleccionar sala</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+        <option selected></option>
+        <option value="1">La Vara</option>
+        <option value="2">Lo Blanco</option>
+        <option value="3">...</option>
       </select>
 
+      <label for="formFile" class="form-label">Seleccione el tipo de registro:</label>
+      <select class="form-select" aria-label="Default select example">
+        <option selected></option>
+        <option value="1">Falla Equipamiento</option>
+        <option value="2">Incidente</option>
+        <option value="3">Robo</option>
+        <option value="3">Otro</option>
+      </select>
+
+      <div class="my-3">
+        <label for="formFile" class="form-label">Seleccione fecha y hora:</label>
+        <input type="datetime-local" id="datetime-local">
+      </div>
+
+      <div class="my-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Ingrese una descripción:</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Adjunte una fotografía:</label>
+        <input class="form-control" type="file" id="formFile">
+      </div>
+
+      <div class="text-center">
+        <button class="btn btn-dark mt-3" type="submit">INGRESAR REGISTRO</button>
+      </div>
+
     </form>
-    
+
   </div>
 
 </body>
+
 </html>
 
 <script>
