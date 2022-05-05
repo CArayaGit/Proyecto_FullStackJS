@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { getUsersDB, createUserDB, getUserDB, updateUserDB, deleteUserDB, getSalasDB, getEquiposDB, getNivelDB } = require("../database/db");
+const { getUsersDB, createUserDB, getUserDB, updateUserDB, deleteUserDB, getSalasDB, getEquiposDB, getNivelDB, getEventosDB } = require("../database/db");
 
 
 const getUsers = async (req, res) => {
@@ -191,6 +191,14 @@ const getNivel = async (req, res) => {
     return res.json({ ok: true, users: respuesta.users});
 };
 
+const getEventos = async (req, res) => {
+    const respuesta = await getEventosDB();
+    if(!respuesta.ok) {
+        return res.status(500).json({ OK: false, msg: respuesta.msg });
+    }
+    return res.json({ ok: true, users: respuesta.users});
+};
+
 module.exports = {
     getUsers,
     createUser,
@@ -200,5 +208,6 @@ module.exports = {
     deleteUser,
     getSalas,
     getEquipos,
-    getNivel
+    getNivel,
+    getEventos
 };

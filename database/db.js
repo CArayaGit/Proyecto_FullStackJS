@@ -224,6 +224,28 @@ const getEquiposDB = async () => {
             }
         };
 
+
+    const getEventosDB = async () => {
+        const client = await pool.connect();
+            try {
+                const respuesta = await client.query(
+                    "SELECT id_evento, US.nombre_user, SA.nombre_sala, tipo_registro, descripcion, imagen, fecha FROM eventos EV, salas SA, usuarios US WHERE EV.usuario = US.id_user AND EV.id_ubicacion = SA.id_ubicacion"
+                );
+                return {
+                    ok: true,
+                    users: respuesta.rows,
+                };
+            } catch (error) {
+                console.log(error);
+                return {
+                    ok: false,
+                    msg: error.message,
+                };
+            } finally {
+                client.release();
+            }
+        };
+
 module.exports = {
     getUsersDB,
     createUserDB,
@@ -233,5 +255,6 @@ module.exports = {
     getSalasDB,
     getSalaDB,
     getEquiposDB,
-    getNivelDB
+    getNivelDB,
+    getEventosDB
 };

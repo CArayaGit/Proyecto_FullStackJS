@@ -1,5 +1,5 @@
 const express = require("express");
-const { getUsers, createUser, loginUser, updateUser, getUser, deleteUser, getSalas, getEquipos, getNivel } = require("../controllers/user.controller");
+const { getUsers, createUser, loginUser, updateUser, getUser, deleteUser, getSalas, getEquipos, getNivel, getEventos } = require("../controllers/user.controller");
 const { requireAuth } = require("../middlewares/requireAuth");
 const { requireData } = require("../middlewares/requireData");
 const router = express.Router();
@@ -15,5 +15,6 @@ router.delete("/editar/:id_user", requireAuth, deleteUser);
 router.get("/salas", getSalas);
 router.get("/equipos", requireAuth, getEquipos);
 router.get("/nivel", requireAuth, getNivel);
+router.get("/eventos", requireAuth, getEventos);
 
 module.exports = router;

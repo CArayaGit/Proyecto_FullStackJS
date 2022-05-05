@@ -1,32 +1,11 @@
-<html>
-
-<head>
-  <style>
-    body {
-      background-image: url('/img/fondo_02.jpg');
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-  </style>
-</head>
-
-<body>
-  {{> Navbar}}
+{{> Navbar}}
 
   <div class="container m-3">
     <h1 class="tex-center">Registro de eventos e incidentes:</h1>
 
-    <body id="registro">
-      <div>
-        <span class="visually-hidden">Loading...</span>
-
-      </div>
-    </body>
-
     <form id="eventRegister">
-
       <label for="formFile" class="form-label">Seleccione una Sala:</label>
-      <select class="form-select" aria-label="Default select example">
+      <select class="form-select" aria-label="Default select example" name="sala">
         <option selected></option>
         <option value="1">La Vara</option>
         <option value="2">Lo Blanco</option>
@@ -34,7 +13,7 @@
       </select>
 
       <label for="formFile" class="form-label">Seleccione el tipo de registro:</label>
-      <select class="form-select" aria-label="Default select example">
+      <select class="form-select" aria-label="Default select example" name="tipoRegistro">
         <option selected></option>
         <option value="1">Falla Equipamiento</option>
         <option value="2">Incidente</option>
@@ -44,32 +23,83 @@
 
       <div class="my-3">
         <label for="formFile" class="form-label">Seleccione fecha y hora:</label>
-        <input type="datetime-local" id="datetime-local">
+        <input type="datetime-local" id="datetime-local" name="fecha">
       </div>
 
       <div class="my-3">
         <label for="exampleFormControlTextarea1" class="form-label">Ingrese una descripción:</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descripcion"></textarea>
       </div>
 
       <div class="mb-3">
         <label for="formFile" class="form-label">Adjunte una fotografía:</label>
-        <input class="form-control" type="file" id="formFile">
+        <input class="form-control" type="file" id="formFile" name="foto">
       </div>
 
       <div class="text-center">
         <button class="btn btn-dark mt-3" type="submit">INGRESAR REGISTRO</button>
       </div>
-
     </form>
+
+    <hr class="text-center" />
+
+    <table class="table table-dark table-striped md-3">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Usuario</th>
+          <th scope="col">Sala</th>
+          <th scope="col">Tipo de registro</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Fecha del registro</th>
+        </tr>
+      </thead>
+
+      <tbody id="registroEventos">
+        <div>
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </tbody>
+    </table>
 
   </div>
 
-</body>
-
-</html>
-
 <script>
+  const registro = document.getElementById('registroEventos')
 
+  const pintarTabla = (data) => {
+    data.forEach(item => {
+      const estado = item.estado;
+      console.log(item)
+      registro.innerHTML += `
+            <tr>
+              <th scope="row">${item.id_evento}</th>
+              <td>${item.nombre_user}</td>
+              <td>${item.nombre_sala}</td>
+              <td>${item.tipo_registro}</td>
+              <td>${item.descripcion}</td>
+              <td>${item.fecha}</td>
+            </tr>
+            `
+    })
 
+    window.document.addEventListener("DOMContentLoaded", async () => {
+      if (!localStorage.getItem("token")) {
+        window.location.href = "/";
+      }
+      const res = await fetch("/api/v1/eventos", {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+      if (!data.ok) {
+        window.location.href = "/salas";
+      }
+
+      pintarTabla(data.users);
+      console.log(data.users);
+    });
+    
 </script>
